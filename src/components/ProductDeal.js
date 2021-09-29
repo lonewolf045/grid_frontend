@@ -3,16 +3,16 @@ import ProductItem from "./ProductItem";
 import withContext from "../withContext";
 import { useParams } from "react-router-dom";
 
-const ProductList = (props) => {
+const ProductDeal = (props) => {
   const { productList } = props;
-  const { type } = useParams();
-  let products = productList[type];
+  const { maj } = useParams();
+  let products = productList[maj];
 
   return (
     <>
       <div className="hero is-primary has-background-info">
         <div className="hero-body container">
-          <h4 className="title has-background-info">Our Products</h4>
+          <h4 className="title has-background-info">Products</h4>
         </div>
       </div>
       <br />
@@ -39,4 +39,4 @@ const ProductList = (props) => {
   );
 };
 
-export default withContext(ProductList);
+export default withContext(ProductDeal);

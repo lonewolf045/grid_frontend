@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductItem = props => {
+const ProductItem = (props) => {
   const { product } = props;
   return (
     <div className=" column is-half">
@@ -15,13 +15,45 @@ const ProductItem = props => {
             </figure>
           </div>
           <div className="media-content">
-            <b style={{ textTransform: "capitalize"}}>
-              {product.name}{" "}<br/>
-              <span className="tag is-primary" style= {{color: 'white',textDecoration: 'none',height: "auto",width: "auto"}}>
+            <b style={{ textTransform: "capitalize" }}>
+              {product.name} <br />
+              <span
+                className="tag is-primary"
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  height: "auto",
+                  width: "auto",
+                }}
+              >
                 {product.discount > 0 ? (
-                  <p><del className = 'amount' style = {{color: 'red',fontSize: '18px'}}>{product.oprice}</del><ins className = 'amount' style = {{color: 'white',fontSize: '24px',padding:'1em 0.25em 1em .5em'}}>{product.dprice}</ins></p>):
-                (
-                  <p><ins className = 'amount' style = {{color: 'white',fontSize: '24px'}}>{product.oprice}</ins></p>
+                  <p>
+                    <del
+                      className="amount"
+                      style={{ color: "red", fontSize: "18px" }}
+                    >
+                      {product.oprice}
+                    </del>
+                    <ins
+                      className="amount"
+                      style={{
+                        color: "white",
+                        fontSize: "24px",
+                        padding: "1em 0.25em 1em .5em",
+                      }}
+                    >
+                      {product.dprice}
+                    </ins>
+                  </p>
+                ) : (
+                  <p>
+                    <ins
+                      className="amount"
+                      style={{ color: "white", fontSize: "24px" }}
+                    >
+                      {product.oprice}
+                    </ins>
+                  </p>
                 )}
               </span>
             </b>
@@ -32,7 +64,7 @@ const ProductItem = props => {
                   props.addToCart({
                     id: product.name,
                     product,
-                    amount: 1
+                    amount: 1,
                   })
                 }
               >
