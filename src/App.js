@@ -28,7 +28,7 @@ export default class App extends Component {
     let user = localStorage.getItem("user");
     let cart = localStorage.getItem("cart");
 
-    const products = await axios.get("http://localhost:3001/api/frontpage/");
+    const products = await axios.get("https://shielded-sands-50569.herokuapp.com/api/frontpage/");
     console.log(products);
     user = user ? JSON.parse(user) : null;
     cart = cart ? JSON.parse(cart) : {};
@@ -36,7 +36,7 @@ export default class App extends Component {
   }
   login = async (email, password) => {
     const res = await axios
-      .post("http://localhost:3001/api/login", { email, password })
+      .post("https://shielded-sands-50569.herokuapp.com/api/login", { email, password })
       .catch((res) => {
         return { status: 401, message: "Unauthorized" };
       });
@@ -48,10 +48,10 @@ export default class App extends Component {
       console.log(response);
       const user_id = response.user_id;
       const newRes = await axios.get(
-        `http://localhost:3001/api/smartbag/${user_id}/`
+        `https://shielded-sands-50569.herokuapp.com/api/smartbag/${user_id}/`
       );
       const orderRes = await axios.get(
-        `http://localhost:3001/api/orders/${user_id}`
+        `https://shielded-sands-50569.herokuapp.com/api/orders/${user_id}`
       );
       console.log(newRes.data, orderRes.data);
       const user = {
@@ -72,7 +72,7 @@ export default class App extends Component {
 
   signup = async (email, password) => {
     const res = await axios
-      .post("http://localhost:3001/api/signup", {
+      .post("https://shielded-sands-50569.herokuapp.com/api/signup", {
         email,
         password,
       })
@@ -134,7 +134,7 @@ export default class App extends Component {
       if (cart[p.name]) {
         p.stock = p.stock - cart[p.name].amount;
 
-        axios.put(`http://localhost:3001/products/${p.id}`, { ...p });
+        axios.put(`https://shielded-sands-50569.herokuapp.com/products/${p.id}`, { ...p });
       }
       return p;
     });
