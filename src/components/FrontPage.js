@@ -13,12 +13,12 @@ const FrontPage = (props) => {
     <Router>
       <div className="hero is-primary has-background-info">
         <div className="hero-body container">
-          <h4 className="title has-background-info">Categories</h4>
+          <h4 className="title has-background-info" style={{fontFamily:'Arvo',fontSize:'48px'}}> Major Categories</h4>
         </div>
       </div>
       <br />
       <div className="container">
-        <div className="column columns is-multiline" style={{fontFamily:'Yaldevi'}}>
+        <div className="column columns is-multiline">
           <Link className="card" to="/labels/snacks & beverages">
             <div className="card-content">
               <div className="title">Snacks and Beverages</div>
