@@ -8,7 +8,7 @@ const ProductItem = (props) => {
       <div className="box has-background-warning">
         <div class="card-image">
           <figure class="image is-4by3">
-            <img src={`./images/${product.item_id}.jpeg`} alt="Placeholder image" styles={{width:"auto",height:"960px"}}/>
+            <img src={`./images/${product.item_id}.jpeg`} alt="Placeholder image" styles={{width:"1280px",height:"960px"}}/>
           </figure>
         </div>
         <div className="card-content">
