@@ -172,26 +172,28 @@ export default class App extends Component {
               }}
             >
               
-              <div className="navbar-brand  navbar-start"> 
-                <Link className="navbar-item" to="/">
-                  <img src={logo} alt="" style = {{height:"10rem",minHeight:"10rem"}}/>
-                  <b className="navbar-item is-size-2 " style={{fontFamily:'Lobster Two',fontSize:'40px'}}>Bhanumati ka Pitara</b>
-                </Link>
-                <label
-                  role="button"
-                  className="navbar-burger burger"
-                  aria-label="menu"
-                  aria-expanded="false"
-                  data-target="navbarBasicExample"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.setState({ showMenu: !this.state.showMenu });
-                  }}
-                >
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                </label>
+              <div className="navbar-brand">
+                <div className="navbar-start"> 
+                  <Link className="navbar-item" to="/">
+                    <img src={logo} alt="" style = {{height:"10rem",minHeight:"10rem"}}/>
+                    <b className="navbar-item is-size-2 " style={{fontFamily:'Lobster Two',fontSize:'40px'}}>Bhanumati ka Pitara</b>
+                  </Link>
+                  <label
+                    role="button"
+                    className="navbar-burger burger"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="navbarBasicExample"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.setState({ showMenu: !this.state.showMenu });
+                    }}
+                  >
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </label>
+                </div>
               </div>
               <div
                 className={`navbar-menu ${
