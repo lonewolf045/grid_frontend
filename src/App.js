@@ -123,24 +123,25 @@ export default class App extends Component {
   };
 
   checkout = () => {
-    if (!this.state.user) {
-      this.routerRef.current.history.push("/login");                                                                                                                                                                              
-      return;
-    }
+     if (!this.state.user) {
+       this.routerRef.current.history.push("/login");                                                                                                                                                                              
+       return;
+     }
 
-    const cart = this.state.cart;
+    // const cart = this.state.cart;
 
-    const products = this.state.products.map((p) => {
-      if (cart[p.name]) {
-        p.stock = p.stock - cart[p.name].amount;
+    // const products = this.state.products.map((p) => {
+    //   if (cart[p.name]) {
+    //     p.stock = p.stock - cart[p.name].amount;
 
-        axios.put(`https://shielded-sands-50569.herokuapp.com/products/${p.id}`, { ...p });
-      }
-      return p;
-    });
+    //     axios.put(`https://shielded-sands-50569.herokuapp.com/products/${p.id}`, { ...p });
+    //   }
+    //   return p;
+    // });
 
-    this.setState({ products });
-    this.clearCart();
+    // this.setState({ products });
+    // this.clearCart();
+    this.setState({cart: {}})
   };
 
   render() {
