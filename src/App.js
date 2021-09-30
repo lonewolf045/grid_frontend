@@ -223,7 +223,7 @@ export default class App extends Component {
                   Cart
                   <span
                     className="tag is-primary has-background-info"
-                    style={{ marginLeft: "5px" }}
+                    style={{ marginLeft: "5px"}}
                   >
                     {Object.keys(this.state.cart).length}
                   </span>
