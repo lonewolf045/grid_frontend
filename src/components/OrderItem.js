@@ -16,7 +16,7 @@ const OrderItem = props => {
           </div>
           <div className="media-content">
             <b style={{ textTransform: "capitalize"}}>
-            <span style={{fontFamily:'Comfortaa',fontSize:"16px"}}>{orderItem.name}</span><br/>
+            <span style={{fontFamily:'Comfortaa',fontSize:"20px"}}>{orderItem.name}</span><br/>
             <span className="tag is-primary" style= {{color: 'white',textDecoration: 'none'}}>
                 <p><ins className = 'amount' style = {{color: 'white'}}>{orderItem.oprice}</ins></p>
             </span>

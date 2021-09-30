@@ -7,7 +7,7 @@ import { Switch, Route, Link, MemoryRouter as Router } from "react-router-dom";
 
 const FrontPage = (props) => {
   const { products } = props.context;
-  let productKeys = Object.keys(products);
+  //let productKeys = Object.keys(products);
 
   return (
     <Router>

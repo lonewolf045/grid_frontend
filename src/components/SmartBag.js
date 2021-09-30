@@ -6,8 +6,6 @@ import {
   Route,
   Switch,
   Link,
-  useRouteMatch,
-  useParams,
 } from "react-router-dom";
 
 const ProductList = props => {
@@ -15,7 +13,6 @@ const ProductList = props => {
   console.log(user.smartbag)
   const keys = Object.keys(user.smartbag);
   //const products = user.smartbag['top'];
-  let match = useRouteMatch();
   console.log(user.smartbag)
   return (
     <Router>

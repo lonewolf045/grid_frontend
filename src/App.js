@@ -166,16 +166,20 @@ export default class App extends Component {
               className="navbar container"
               role="navigation"
               aria-label="main navigation"
+              style = {{
+                maxHeight: "20rem",
+                height: "10rem",
+              }}
             >
               
-              <div className="navbar-brand"> 
-                <Link class="navbar-item" to="/">
-                  <img src={logo} width="112" height="112"/>
-                  <b className="navbar-item is-size-4 " style={{fontFamily:'Lobster Two'}}>Bhanumati ka Pitara</b>
+              <div className="navbar-brand  navbar-start"> 
+                <Link className="navbar-item" to="/">
+                  <img src={logo} alt="" style = {{height:"10rem",minHeight:"10rem"}}/>
+                  <b className="navbar-item is-size-2 " style={{fontFamily:'Lobster Two',fontSize:'40px'}}>Bhanumati ka Pitara</b>
                 </Link>
                 <label
                   role="button"
-                  class="navbar-burger burger"
+                  className="navbar-burger burger"
                   aria-label="menu"
                   aria-expanded="false"
                   data-target="navbarBasicExample"
@@ -194,25 +198,26 @@ export default class App extends Component {
                   this.state.showMenu ? "is-active" : ""
                 }`}
               >
-                <Link to="/products" className="navbar-item">
+              <div className="navbar-end">
+                <Link to="/products" className="navbar-item is-size-4">
                   Products
                 </Link>
                 {this.state.user && this.state.user.accessLevel < 1 && (
-                  <Link to="/add-product" className="navbar-item">
+                  <Link to="/add-product" className="navbar-item is-size-4">
                     Add Product
                   </Link>
                 )}
                 {this.state.user && this.state.user.accessLevel >= 1 && (
-                  <Link to="/smart-bag" className="navbar-item">
+                  <Link to="/smart-bag" className="navbar-item is-size-4">
                     Smart Bag
                   </Link>
                 )}
                 {this.state.user && this.state.user.accessLevel >= 1 && (
-                  <Link to="/order-history" className="navbar-item">
+                  <Link to="/order-history" className="navbar-item is-size-4">
                     Order History
                   </Link>
                 )}
-                <Link to="/cart" className="navbar-item">
+                <Link to="/cart" className="navbar-item is-size-4">
                   Cart
                   <span
                     className="tag is-primary has-background-info"
@@ -222,19 +227,20 @@ export default class App extends Component {
                   </span>
                 </Link>
                 {!this.state.user ? (
-                  <Link to="/login" className="navbar-item">
+                  <Link to="/login" className="navbar-item is-size-4">
                     Login
                   </Link>
                 ) : (
-                  <Link to="/" onClick={this.logout} className="navbar-item">
+                  <Link to="/" onClick={this.logout} className="navbar-item is-size-4">
                     Logout
                   </Link>
                 )}
                 {!this.state.user ? (
-                  <Link to="/signup" className="navbar-item">
+                  <Link to="/signup" className="navbar-item is-size-4">
                     Sign Up
                   </Link>
                 ) : null}
+              </div>
               </div>
             </nav>
             <Switch>

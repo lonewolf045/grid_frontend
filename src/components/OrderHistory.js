@@ -6,8 +6,6 @@ import {
   Route,
   Switch,
   Link,
-  useRouteMatch,
-  useParams,
 } from "react-router-dom";
 
 

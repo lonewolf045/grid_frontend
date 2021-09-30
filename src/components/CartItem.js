@@ -18,7 +18,7 @@ const CartItem = props => {
           </div>
           <div className="media-content">
             <b style={{ textTransform: "capitalize" ,fontFamily:'Comfortaa'}}>
-              <span style={{fontFamily:'Comfortaa',fontSize:"16px"}}>{product.name}</span>{" "}<br/>
+              <span style={{fontFamily:'Comfortaa',fontSize:"20px"}}>{product.name}</span>{" "}<br/>
               <span className="tag is-primary">{product.dprice}</span>
             </b>
             <div>{product.shortDesc}</div>

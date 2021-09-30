@@ -18,7 +18,7 @@ const ProductItem = (props) => {
             </div>
             <div className="media-content" style={{overflow:"hidden",textOverflow:"ellipsis"}}>
               <b style={{ textTransform: "capitalize" }}>
-                <span style={{fontFamily:'Comfortaa',fontSize:"16px"}}>{product.name}</span> <br />
+                <span style={{fontFamily:'Comfortaa',fontSize:"18px"}}>{product.name}</span> <br />
                 <span
                   className="tag is-primary"
                   style={{

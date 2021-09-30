@@ -29,12 +29,12 @@ const Cart = props => {
               <div className="is-pulled-right">
                 <button
                   onClick={props.context.clearCart}
-                  className="button is-warning "
+                  className="button is-warning is-size-4"
                 >
                   Clear cart
                 </button>{" "}
                 <button
-                  className="button is-success"
+                  className="button is-success is-size-4"
                   onClick={props.context.checkout}
                 >
                   Checkout
