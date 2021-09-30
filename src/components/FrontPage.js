@@ -11,39 +11,43 @@ const FrontPage = (props) => {
 
   return (
     <Router>
-      <div className="hero is-primary has-background-info">
+      <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
         <div className="hero-body container">
-          <h4 className="title has-background-info" style={{fontFamily:'Arvo',fontSize:'48px'}}> Major Categories</h4>
+          <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'48px'}}> Major Categories</h4>
         </div>
       </div>
       <br />
-      <div className="container">
-        <div className="column columns is-multiline">
-          <Link className="card" to="/labels/snacks & beverages">
-            <div className="card-content">
-              <div className="title">Snacks and Beverages</div>
-            </div>
-          </Link>
-          <Link className="card" to="/labels/packaged food">
-            <div className="card-content">
-              <div className="title">Packaged Food</div>
-            </div>
-          </Link>
-          <Link className="card" to="/deal/Popular">
-            <div className="card-content">
-              <div className="title">Popular Products</div>
-            </div>
-          </Link>
-          <Link className="card" to="/deal/Sponsored">
-            <div className="card-content">
-              <div className="title">Sponsored Products</div>
-            </div>
-          </Link>
-          <Link className="card" to="/deal/Top Discounts">
-            <div className="card-content">
-              <div className="title">Top Discount</div>
-            </div>
-          </Link>
+      <div className="container" style= {{margin: '20px auto 25px auto'}}>
+        <div className="rows">
+          <div className="row is-full columns">
+            <Link className="card column is-half has-text-centered" style={{backgroundColor:"#3e8ed0",color:"#f0f0f0",margin:"10px 10px 10px 10px"}} to="/labels/snacks & beverages">
+              <div className="card-content">
+                <div className="title" style={{color:"#f0f0f0",fontFamily: 'Gluten'}}>Snacks and Beverages</div>
+              </div>
+            </Link>
+            <Link className="card column is-half has-text-centered" style={{backgroundColor:"#3e8ed0",color:"#f0f0f0",margin:"10px 10px 10px 10px"}} to="/labels/packaged food">
+              <div className="card-content">
+                <div className="title" style={{color:"#f0f0f0",fontFamily: 'Gluten'}}>Packaged Food</div>
+              </div>
+            </Link>
+          </div>
+          <div className="row is-full columns">
+            <Link className="card column is-one-third has-text-centered" style={{backgroundColor:"#3e8ed0",color:"#f0f0f0",margin:"10px 10px 10px 10px"}} to="/deal/Popular">
+              <div className="card-content">
+                <div className="title" style={{color:"#f0f0f0",fontFamily: 'Gluten'}}>Popular Products</div>
+              </div>
+            </Link>
+            <Link className="card column is-one-third has-text-centered" style={{backgroundColor:"#3e8ed0",color:"#f0f0f0",margin:"10px 10px 10px 10px"}} to="/deal/Sponsored">
+              <div className="card-content">
+                <div className="title" style={{color:"#f0f0f0",fontFamily: 'Gluten'}}>Sponsored Products</div>
+              </div>
+            </Link>
+            <Link className="card column is-one-third has-text-centered" style={{backgroundColor:"#3e8ed0",color:"#f0f0f0",margin:"10px 10px 10px 10px"}} to="/deal/Top Discounts">
+              <div className="card-content">
+                <div className="title" style={{color:"#f0f0f0",fontFamily: 'Gluten'}}>Top Discount</div>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
       <Switch>

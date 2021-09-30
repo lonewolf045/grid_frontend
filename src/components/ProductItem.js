@@ -4,13 +4,8 @@ const ProductItem = (props) => {
   const { product } = props;
   //const url = './images/'+product.item_id+'.jpeg.'
   return (
-    <div className="card is-half">
-      <div className="box has-background-warning">
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src={`./images/${product.item_id}.jpeg`} alt="Placeholder image" styles={{width:"1280px",height:"960px"}}/>
-          </figure>
-        </div>
+
+      <div className="card is-half is-centred" style={{backgroundColor:"rgb(255,235,103)",margin:"10px 10px 10px 10px",width:"650px",height:"160px"}}>
         <div className="card-content">
           <div className="media">
             <div className="media-left">
@@ -21,9 +16,9 @@ const ProductItem = (props) => {
                 />
               </figure>
             </div>
-            <div className="media-content">
+            <div className="media-content" style={{overflow:"hidden",textOverflow:"ellipsis"}}>
               <b style={{ textTransform: "capitalize" }}>
-                {product.name} <br />
+                <span style={{fontFamily:'Comfortaa',fontSize:"16px"}}>{product.name}</span> <br />
                 <span
                   className="tag is-primary"
                   style={{
@@ -65,8 +60,8 @@ const ProductItem = (props) => {
                 </span>
               </b>
               <div className="is-clearfix">
-                <button
-                  className="button is-small is-primary   is-pulled-right has-background-info"
+              <button
+                  className="button is-primary is-small is-pulled-right has-background-info"
                   onClick={() =>
                     props.addToCart({
                       id: product.name,
@@ -78,11 +73,11 @@ const ProductItem = (props) => {
                   Add to Cart
                 </button>
               </div>
+              
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

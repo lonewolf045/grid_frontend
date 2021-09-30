@@ -10,9 +10,9 @@ const ProductList = (props) => {
 
   return (
     <>
-      <div className="hero is-primary has-background-info">
+      <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
         <div className="hero-body container">
-          <h4 className="title has-background-info">Our Products</h4>
+          <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'38px'}}>Our Products</h4>
         </div>
       </div>
       <br />
