@@ -14,6 +14,8 @@ import SmartBag from "./components/SmartBag";
 import OrderHistory from "./components/OrderHistory";
 import SignUp from "./components/SignUp";
 
+import logo from './logo.png'
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -165,8 +167,12 @@ export default class App extends Component {
               role="navigation"
               aria-label="main navigation"
             >
+              
               <div className="navbar-brand"> 
-                <b className="navbar-item is-size-4 " style={{fontFamily:'Lobster Two'}}>Bhanumati ka Pitara</b>
+                <Link class="navbar-item" to="/">
+                  <img src={logo} width="112" height="112"/>
+                  <b className="navbar-item is-size-4 " style={{fontFamily:'Lobster Two'}}>Bhanumati ka Pitara</b>
+                </Link>
                 <label
                   role="button"
                   class="navbar-burger burger"

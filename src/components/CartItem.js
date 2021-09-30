@@ -5,8 +5,8 @@ const CartItem = props => {
 
   const { product, amount } = cartItem;
   return (
-    <div className=" column is-half">
-      <div className="box has-background-warning">
+    <div className=" card is-half" style={{backgroundColor:"rgb(255,235,103)",margin:"10px 10px 10px 10px",width:"650px",height:"160px"}}>
+      <div className="card-content">
         <div className="media">
           <div className="media-left">
             <figure className="image is-64x64">
@@ -17,8 +17,8 @@ const CartItem = props => {
             </figure>
           </div>
           <div className="media-content">
-            <b style={{ textTransform: "capitalize" }}>
-              {product.name}{" "}<br/>
+            <b style={{ textTransform: "capitalize" ,fontFamily:'Comfortaa'}}>
+              <span style={{fontFamily:'Comfortaa',fontSize:"16px"}}>{product.name}</span>{" "}<br/>
               <span className="tag is-primary">{product.dprice}</span>
             </b>
             <div>{product.shortDesc}</div>
