@@ -164,8 +164,8 @@ export default class App extends Component {
               role="navigation"
               aria-label="main navigation"
             >
-              <div className="navbar-brand">
-                <b className="navbar-item is-size-4 ">Bhanumati ka Pitara</b>
+              <div className="navbar-brand"> 
+                <b className="navbar-item is-size-4 " style={{fontFamily:'Lobster Two'}}>Bhanumati ka Pitara</b>
                 <label
                   role="button"
                   class="navbar-burger burger"

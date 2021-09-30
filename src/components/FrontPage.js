@@ -18,7 +18,7 @@ const FrontPage = (props) => {
       </div>
       <br />
       <div className="container">
-        <div className="column columns is-multiline">
+        <div className="column columns is-multiline" style={{fontFamily:'Yaldevi'}}>
           <Link className="card" to="/labels/snacks & beverages">
             <div className="card-content">
               <div className="title">Snacks and Beverages</div>
