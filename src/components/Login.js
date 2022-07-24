@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import withContext from "../withContext";
+import HowToUse from "./HowToUse";
 
 class Login extends Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class Login extends Component {
             </div>
           </div>
         </form>
+        <HowToUse/>
       </>
     ) : (
       <Redirect to="/products" />

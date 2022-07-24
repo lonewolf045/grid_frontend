@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import withContext from "../withContext";
-
+import HowToUse from "./HowToUse";
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -72,6 +72,7 @@ class SignUp extends Component {
             </div>
           </div>
         </form>
+        <HowToUse/>
       </>
     ) : (
       <Redirect to="/login" />
