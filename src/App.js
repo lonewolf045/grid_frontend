@@ -1,18 +1,25 @@
 import React, { Component } from "react";
-import { Switch, Route, Link, MemoryRouter as Router } from "react-router-dom";
+import { Routes, Route, Link, MemoryRouter as Router } from "react-router-dom";
+import "./App.css";
 
 import AddProduct from "./components/AddProduct";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
 
 import FrontPage from "./components/FrontPage";
+import ProductLabel from "./components/ProductLabel";
+import ProductType from "./components/ProductType";
+import ProductList from "./components/ProductList";
+import ProductDeal from "./components/ProductDeal";
+import SmartBag from "./components/SmartBag";
+import OrderHistory from "./components/OrderHistory";
+import OrderTable from "./components/OrderTable";
+import SignUp from "./components/SignUp";
+import NavigationWrapper from "./components/NavigationWrapper";
 
 import Context from "./Context";
 
 import axios from "axios";
-import SmartBag from "./components/SmartBag";
-import OrderHistory from "./components/OrderHistory";
-import SignUp from "./components/SignUp";
 
 import logo from './logo.png'
 
@@ -24,21 +31,29 @@ export default class App extends Component {
       cart: {},
       products: [],
     };
-    this.routerRef = React.createRef();
+    this.navigate = null;
   }
   async componentDidMount() {
     let user = localStorage.getItem("user");
     let cart = localStorage.getItem("cart");
 
-    const products = await axios.get("https://shielded-sands-50569.herokuapp.com/api/frontpage/");
-    console.log(products);
-    user = user ? JSON.parse(user) : null;
-    cart = cart ? JSON.parse(cart) : {};
-    this.setState({ user, products: products.data, cart });
+    try {
+      const products = await axios.get("http://127.0.0.1:8000/api/frontpage/");
+      console.log("API Response:", products);
+      user = user ? JSON.parse(user) : null;
+      cart = cart ? JSON.parse(cart) : {};
+      this.setState({ user, products: products.data, cart });
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+      // Set default state even if API fails
+      user = user ? JSON.parse(user) : null;
+      cart = cart ? JSON.parse(cart) : {};
+      this.setState({ user, products: [], cart });
+    }
   }
   login = async (email, password) => {
     const res = await axios
-      .post("https://shielded-sands-50569.herokuapp.com/api/login", { email, password })
+      .post("http://127.0.0.1:8000/api/login", { email, password })
       .catch((res) => {
         return { status: 401, message: "Unauthorized" };
       });
@@ -50,10 +65,10 @@ export default class App extends Component {
       console.log(response);
       const user_id = response.user_id;
       const newRes = await axios.get(
-        `https://shielded-sands-50569.herokuapp.com/api/smartbag/${user_id}/`
+        `http://127.0.0.1:8000/api/smartbag/${user_id}/`
       );
       const orderRes = await axios.get(
-        `https://shielded-sands-50569.herokuapp.com/api/orders/${user_id}`
+        `http://127.0.0.1:8000/api/orders/${user_id}`
       );
       console.log(newRes.data, orderRes.data);
       const user = {
@@ -74,7 +89,7 @@ export default class App extends Component {
 
   signup = async (email, password) => {
     const res = await axios
-      .post("https://shielded-sands-50569.herokuapp.com/api/signup", {
+      .post("http://127.0.0.1:8000/api/signup", {
         email,
         password,
       })
@@ -82,7 +97,7 @@ export default class App extends Component {
         return { status: 401, message: "Unauthorized" };
       });
     if (res.status === 201) {
-      this.routerRef.current.history.push("/login");
+      this.navigate("/login");
       return true;
     } else {
       return false;
@@ -91,7 +106,7 @@ export default class App extends Component {
 
   logout = (e) => {
     e.preventDefault();
-    this.routerRef.current.history.push("/products");
+    this.navigate("/products");
     this.setState({ user: null, cart: {}, smartbag: {} });
     localStorage.removeItem("user");
     localStorage.removeItem("cart");
@@ -126,7 +141,7 @@ export default class App extends Component {
 
   checkout = () => {
      if (!this.state.user) {
-       this.routerRef.current.history.push("/login");                                                                                                                                                                              
+       this.navigate("/login");                                                                                                                                                                              
        return;
      }
 
@@ -136,7 +151,7 @@ export default class App extends Component {
     //   if (cart[p.name]) {
     //     p.stock = p.stock - cart[p.name].amount;
 
-    //     axios.put(`https://shielded-sands-50569.herokuapp.com/products/${p.id}`, { ...p });
+    //     axios.put(`http://127.0.0.1:8000/products/${p.id}`, { ...p });
     //   }
     //   return p;
     // });
@@ -144,6 +159,16 @@ export default class App extends Component {
     // this.setState({ products });
     // this.clearCart();
     this.setState({cart: {}})
+  };
+
+  addProduct = (product, callback) => {
+    let products = this.state.products.slice();
+    products.push(product);
+    this.setState({ products }, () => callback && callback());
+  };
+
+  setNavigate = (navigate) => {
+    this.navigate = navigate;
   };
 
   render() {
@@ -160,8 +185,9 @@ export default class App extends Component {
           signup: this.signup,
         }}
       >
-        <Router ref={this.routerRef}>
-          <div className="App">
+        <Router>
+          <NavigationWrapper setNavigate={this.setNavigate}>
+            <div className="App">
             <nav
               className="navbar container"
               role="navigation"
@@ -169,6 +195,7 @@ export default class App extends Component {
               style = {{
                 maxHeight: "20rem",
                 height: "10rem",
+                backgroundColor: "white",
               }}
             >
               
@@ -245,17 +272,24 @@ export default class App extends Component {
               </div>
               </div>
             </nav>
-            <Switch>
-              <Route exact path="/" component={FrontPage} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/cart" component={Cart} />
-              <Route exact path="/add-product" component={AddProduct} />
-              <Route exact path="/products" component={FrontPage} />
-              <Route exact path="/smart-bag" component={SmartBag} />
-              <Route exact path="/order-history" component={OrderHistory} />
-              <Route exact path="/signup" component={SignUp} />
-            </Switch>
-          </div>
+            <Routes>
+              <Route path="/" element={<FrontPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/products" element={<FrontPage />} />
+              <Route path="/labels/:maj/*" element={<ProductLabel />} />
+              <Route path="/labels/:maj/:min/*" element={<ProductType />} />
+              <Route path="/labels/:maj/:min/:type" element={<ProductList />} />
+              <Route path="/deal/:maj" element={<ProductDeal />} />
+              <Route path="/smart-bag" element={<SmartBag />} />
+              <Route path="/smartbag/:maj" element={<ProductDeal />} />
+              <Route path="/order-history" element={<OrderHistory />} />
+              <Route path="/orderHis/:key" element={<OrderTable />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+            </div>
+          </NavigationWrapper>
         </Router>
       </Context.Provider>
     );

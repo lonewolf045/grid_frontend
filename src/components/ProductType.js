@@ -1,22 +1,17 @@
 import React from "react";
-import ProductList from "./ProductList";
 import withContext from "../withContext";
 import {
-  MemoryRouter as Router,
-  Switch,
-  Route,
   Link,
-  useRouteMatch,
   useParams,
 } from "react-router-dom";
 
 const ProductType = (props) => {
-  const { productList } = props;
-  let { min } = useParams();
-  let match = useRouteMatch();
-  console.log(productList);
+  const { products } = props.context;
+  let { maj, min } = useParams();
+  console.log("ProductType - products:", products, "maj:", maj, "min:", min);
+  
   return (
-    <Router>
+    <div style={{backgroundColor: "white", minHeight: "100vh"}}>
       <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
         <div className="hero-body container">
           <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'40px'}}>Product Types</h4>
@@ -25,8 +20,8 @@ const ProductType = (props) => {
       <br />
       <div className="container">
         <div className="column columns is-multiline">
-          {Object.keys(productList[min]).map((key) => (
-            <Link className="card" to={`/${match.url}/${key}`} style={{backgroundColor:"#3e8ed0",margin:"10px 10px 10px 10px",width:"425px",color:"#f0f0f0"}}>
+          {products && products[maj] && products[maj][min] && Object.keys(products[maj][min]).map((key) => (
+            <Link key={key} className="card" to={`/labels/${maj}/${min}/${key}`} style={{backgroundColor:"#3e8ed0",margin:"10px 10px 10px 10px",width:"425px",color:"#f0f0f0"}}>
               <div className="card-content">
                 <div className="title has-text-centered" style={{color:"#f0f0f0",fontSize : "2em",fontFamily: 'Gluten'}}>
                   {key
@@ -40,12 +35,7 @@ const ProductType = (props) => {
           ))}
         </div>
       </div>
-      <Switch>
-        <Route path={`/${match.url}/:type`}>
-          <ProductList productList={productList[min]} />
-        </Route>
-      </Switch>
-    </Router>
+    </div>
   );
 };
 

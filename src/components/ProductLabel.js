@@ -1,22 +1,17 @@
 import React from "react";
-import ProductType from "./ProductType";
 import withContext from "../withContext";
 import {
-  MemoryRouter as Router,
-  Switch,
-  Route,
   Link,
-  useRouteMatch,
   useParams,
 } from "react-router-dom";
 
 const ProductLabel = (props) => {
-  const { productList } = props;
+  const { products } = props.context;
   let { maj } = useParams();
-  let match = useRouteMatch();
-  console.log(productList);
+  console.log("ProductLabel - products:", products, "maj:", maj);
+  
   return (
-    <Router>
+    <div style={{backgroundColor: "white", minHeight: "100vh"}}>
       <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
         <div className="hero-body container">
           <h4 className="title" style={{fontFamily:'Patrick Hand SC'
@@ -26,8 +21,8 @@ const ProductLabel = (props) => {
       <br />
       <div className="container">
         <div className="column columns is-multiline">
-          {Object.keys(productList[maj]).map((key) => (
-            <Link className="card " to={`/${match.url}/${key}`} style={{backgroundColor:"#3e8ed0",margin:"10px 10px 10px 10px",width:"425px",color:"#f0f0f0"}}>
+          {products && products[maj] && Object.keys(products[maj]).map((key) => (
+            <Link key={key} className="card " to={`/labels/${maj}/${key}`} style={{backgroundColor:"#3e8ed0",margin:"10px 10px 10px 10px",width:"425px",color:"#f0f0f0"}}>
               <div className="card-content ">
                 <div className="title has-text-centered" style={{color:"#f0f0f0",fontSize : "2em",fontFamily: 'Gluten'}}>
                   {key
@@ -41,12 +36,7 @@ const ProductLabel = (props) => {
           ))}
         </div>
       </div>
-      <Switch>
-        <Route exact path={`/${match.url}/:min`}>
-          <ProductType productList={productList[maj]} />
-        </Route>
-      </Switch>
-    </Router>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import withContext from "../withContext";
 import HowToUse from "./HowToUse";
 
@@ -76,7 +76,7 @@ class Login extends Component {
         <HowToUse/>
       </>
     ) : (
-      <Redirect to="/products" />
+      <Navigate to="/products" replace />
     );
   }
 }

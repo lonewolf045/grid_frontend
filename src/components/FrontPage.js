@@ -1,16 +1,13 @@
 import React from "react";
-
-import ProductLabel from "./ProductLabel";
-import ProductDeal from "./ProductDeal";
 import withContext from "../withContext";
-import { Switch, Route, Link, MemoryRouter as Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const FrontPage = (props) => {
   const { products } = props.context;
-  //let productKeys = Object.keys(products);
+  console.log("FrontPage - products:", products);
 
   return (
-    <Router>
+    <div style={{backgroundColor: "white", minHeight: "100vh"}}>
       <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
         <div className="hero-body container">
           <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'48px'}}> Major Categories</h4>
@@ -50,16 +47,10 @@ const FrontPage = (props) => {
           </div>
         </div>
       </div>
-      <Switch>
-        <Route exact path="/labels/:maj">
-          <ProductLabel productList={products} />
-        </Route>
-        <Route exact path="/deal/:maj">
-          <ProductDeal productList={products} />
-        </Route>
-      </Switch>
-    </Router>
+    </div>
   );
 };
+
+
 
 export default withContext(FrontPage);
