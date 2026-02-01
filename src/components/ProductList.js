@@ -1,5 +1,6 @@
 import React from "react";
-import ProductItem from "./ProductItem";
+import { ProductGrid } from "./product";
+import { Layout, LoadingSpinner, Breadcrumb } from "./ui";
 import withContext from "../withContext";
 import { useParams } from "react-router-dom";
 
@@ -12,13 +13,11 @@ const ProductList = (props) => {
   if (!props.context) {
     console.log("ProductList: No context found");
     return (
-      <div style={{backgroundColor: "white", minHeight: "100vh", padding: "20px"}}>
-        <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
-          <div className="hero-body container">
-            <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'38px'}}>Loading...</h4>
-          </div>
+      <Layout.Page title="Loading...">
+        <div className="loading-center">
+          <LoadingSpinner size="large" text="Loading products..." />
         </div>
-      </div>
+      </Layout.Page>
     );
   }
 
@@ -32,34 +31,32 @@ const ProductList = (props) => {
   }
   console.log("ProductList productItems:", productItems);
 
+  const categoryTitle = `${maj} > ${min} > ${type}`;
+
+  // Create breadcrumb items
+  const breadcrumbItems = [
+    { label: 'Home', href: '/', icon: 'home' },
+    { label: 'Products', href: '/products', icon: 'products' },
+    { label: maj, href: `/labels/${maj}` },
+    { label: min, href: `/labels/${maj}/${min}` },
+    { label: type, href: `/labels/${maj}/${min}/${type}`, isActive: true }
+  ];
+
   return (
-    <div style={{backgroundColor: "white", minHeight: "100vh"}}>
-      <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
-        <div className="hero-body container">
-          <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'38px'}}>Our Products</h4>
-        </div>
-      </div>
-      <br />
-      <div className="container">
-        <div className="column columns is-multiline">
-          {productItems && productItems.length ? (
-            productItems.map((product) => (
-              <ProductItem
-                product={product}
-                key={product.item_id}
-                addToCart={props.context.addToCart}
-              />
-            ))
-          ) : (
-            <div className="column">
-              <span className="title has-text-grey-light">
-                No products found!
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <Layout.Page 
+      title="Our Products"
+      subtitle={`Browse ${categoryTitle.toLowerCase()}`}
+      breadcrumbs={<Breadcrumb items={breadcrumbItems} />}
+    >
+      <ProductGrid
+        products={productItems}
+        onAddToCart={props.context.addToCart}
+        emptyMessage="No products found in this category"
+        emptyDescription="Try browsing other categories or check back later for new products."
+        columns="auto"
+        gap="medium"
+      />
+    </Layout.Page>
   );
 };
 

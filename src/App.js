@@ -1,27 +1,26 @@
-import React, { Component } from "react";
-import { Routes, Route, Link, MemoryRouter as Router } from "react-router-dom";
+import React, { Component, Suspense, lazy } from "react";
+import { Routes, Route, MemoryRouter as Router } from "react-router-dom";
+import axios from "axios";
+import NavigationWrapper from "./components/NavigationWrapper";
+import { LoadingSpinner } from "./components/ui";
+import Context from "./Context";
+import { API_ENDPOINTS } from "./constants";
 import "./App.css";
 
-import AddProduct from "./components/AddProduct";
-import Cart from "./components/Cart";
-import Login from "./components/Login";
-
-import FrontPage from "./components/FrontPage";
-import ProductLabel from "./components/ProductLabel";
-import ProductType from "./components/ProductType";
-import ProductList from "./components/ProductList";
-import ProductDeal from "./components/ProductDeal";
-import SmartBag from "./components/SmartBag";
-import OrderHistory from "./components/OrderHistory";
-import OrderTable from "./components/OrderTable";
-import SignUp from "./components/SignUp";
-import NavigationWrapper from "./components/NavigationWrapper";
-
-import Context from "./Context";
-
-import axios from "axios";
-
-import logo from './logo.png'
+// Lazy load components for better performance
+const AddProduct = lazy(() => import("./components/AddProduct"));
+const Cart = lazy(() => import("./components/Cart"));
+const Login = lazy(() => import("./components/Login"));
+const FrontPage = lazy(() => import("./components/FrontPage"));
+const ProductLabel = lazy(() => import("./components/ProductLabel"));
+const ProductType = lazy(() => import("./components/ProductType"));
+const ProductList = lazy(() => import("./components/ProductList"));
+const ProductDeal = lazy(() => import("./components/ProductDeal"));
+const SmartBag = lazy(() => import("./components/SmartBag"));
+const SmartBagProducts = lazy(() => import("./components/SmartBagProducts"));
+const OrderHistory = lazy(() => import("./components/OrderHistory"));
+const OrderTable = lazy(() => import("./components/OrderTable"));
+const SignUp = lazy(() => import("./components/SignUp"));
 
 export default class App extends Component {
   constructor(props) {
@@ -30,58 +29,96 @@ export default class App extends Component {
       user: null,
       cart: {},
       products: [],
+      isLoading: true,
+      error: null
     };
     this.navigate = null;
   }
+  
   async componentDidMount() {
     let user = localStorage.getItem("user");
     let cart = localStorage.getItem("cart");
 
     try {
-      const products = await axios.get("http://127.0.0.1:8000/api/frontpage/");
+      this.setState({ isLoading: true });
+      const products = await axios.get(API_ENDPOINTS.FRONTPAGE);
       console.log("API Response:", products);
       user = user ? JSON.parse(user) : null;
       cart = cart ? JSON.parse(cart) : {};
-      this.setState({ user, products: products.data, cart });
+      this.setState({ 
+        user, 
+        products: products.data, 
+        cart, 
+        isLoading: false,
+        error: null 
+      });
     } catch (error) {
       console.error("Failed to fetch products:", error);
       // Set default state even if API fails
       user = user ? JSON.parse(user) : null;
       cart = cart ? JSON.parse(cart) : {};
-      this.setState({ user, products: [], cart });
+      this.setState({ 
+        user, 
+        products: [], 
+        cart, 
+        isLoading: false,
+        error: "Failed to load products. Please refresh the page." 
+      });
     }
   }
+  
   login = async (email, password) => {
     const res = await axios
-      .post("http://127.0.0.1:8000/api/login", { email, password })
+      .post(API_ENDPOINTS.LOGIN, { email, password })
       .catch((res) => {
         return { status: 401, message: "Unauthorized" };
       });
 
     if (res.status === 202) {
       let response = JSON.parse(res.config.data);
-      const { email } = response.email;
+      const { email } = response;
       response = JSON.parse(res.request.response);
-      console.log(response);
+      console.log("Login response:", response);
       const user_id = response.user_id;
-      const newRes = await axios.get(
-        `http://127.0.0.1:8000/api/smartbag/${user_id}/`
-      );
-      const orderRes = await axios.get(
-        `http://127.0.0.1:8000/api/orders/${user_id}`
-      );
-      console.log(newRes.data, orderRes.data);
-      const user = {
-        user_id,
-        email,
-        smartbag: newRes.data,
-        orderHis: orderRes.data,
-        accessLevel: 1,
-      };
+      
+      try {
+        const newRes = await axios.get(
+          API_ENDPOINTS.SMARTBAG(user_id)
+        );
+        const orderRes = await axios.get(
+          API_ENDPOINTS.ORDERS(user_id)
+        );
+        
+        console.log("SmartBag API Response:", newRes.data);
+        console.log("Orders API Response:", orderRes.data);
+        
+        const user = {
+          user_id,
+          email,
+          smartbag: newRes.data,
+          orderHis: orderRes.data,
+          accessLevel: 1,
+        };
 
-      this.setState({ user });
-      localStorage.setItem("user", JSON.stringify(user));
-      return true;
+        this.setState({ user });
+        localStorage.setItem("user", JSON.stringify(user));
+        return true;
+      } catch (apiError) {
+        console.error("Error fetching user data:", apiError);
+        
+        // Create user with empty smartbag if API calls fail
+        const user = {
+          user_id,
+          email,
+          smartbag: {},
+          orderHis: [],
+          accessLevel: 1,
+        };
+        
+        this.setState({ user });
+        localStorage.setItem("user", JSON.stringify(user));
+        return true;
+      }
     } else {
       return false;
     }
@@ -89,7 +126,7 @@ export default class App extends Component {
 
   signup = async (email, password) => {
     const res = await axios
-      .post("http://127.0.0.1:8000/api/signup", {
+      .post(API_ENDPOINTS.SIGNUP, {
         email,
         password,
       })
@@ -151,7 +188,7 @@ export default class App extends Component {
     //   if (cart[p.name]) {
     //     p.stock = p.stock - cart[p.name].amount;
 
-    //     axios.put(`http://127.0.0.1:8000/products/${p.id}`, { ...p });
+    //     axios.put(API_ENDPOINTS.PRODUCTS(p.id), { ...p });
     //   }
     //   return p;
     // });
@@ -172,6 +209,38 @@ export default class App extends Component {
   };
 
   render() {
+    const { isLoading, error } = this.state;
+
+    // Show loading spinner while app is initializing
+    if (isLoading) {
+      return (
+        <div className="app-loading" role="status" aria-live="polite">
+          <div className="app-loading-content">
+            <LoadingSpinner size="large" text="Loading Bhanumati ka Pitara..." />
+            <span className="sr-only">Loading application, please wait...</span>
+          </div>
+        </div>
+      );
+    }
+
+    // Show error state if initial load failed
+    if (error) {
+      return (
+        <div className="app-error" role="alert" aria-live="assertive">
+          <div className="app-error-content">
+            <h2>Something went wrong</h2>
+            <p>{error}</p>
+            <button 
+              onClick={() => window.location.reload()}
+              aria-label="Refresh the page to try again"
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <Context.Provider
         value={{
@@ -183,112 +252,41 @@ export default class App extends Component {
           clearCart: this.clearCart,
           checkout: this.checkout,
           signup: this.signup,
+          logout: this.logout,
         }}
       >
         <Router>
+          {/* Skip to main content link for accessibility */}
+          <a href="#main-content" className="skip-to-main">
+            Skip to main content
+          </a>
           <NavigationWrapper setNavigate={this.setNavigate}>
-            <div className="App">
-            <nav
-              className="navbar container"
-              role="navigation"
-              aria-label="main navigation"
-              style = {{
-                maxHeight: "20rem",
-                height: "10rem",
-                backgroundColor: "white",
-              }}
-            >
-              
-              <div className="navbar-brand">
-                <div className="navbar-start"> 
-                  <Link className="navbar-item" to="/">
-                    <img src={logo} alt="" style = {{height:"10rem",minHeight:"10rem"}}/>
-                    <b className="navbar-item is-size-2 " style={{fontFamily:'Lobster Two',fontSize:'40px'}}>Bhanumati ka Pitara</b>
-                  </Link>
-                  <label
-                    role="button"
-                    className="navbar-burger burger"
-                    aria-label="menu"
-                    aria-expanded="false"
-                    data-target="navbarBasicExample"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.setState({ showMenu: !this.state.showMenu });
-                    }}
-                  >
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                  </label>
-                </div>
-              </div>
-              <div
-                className={`navbar-menu ${
-                  this.state.showMenu ? "is-active" : ""
-                }`}
+            <main id="main-content" role="main">
+              <Suspense 
+                fallback={
+                  <div className="route-loading">
+                    <LoadingSpinner size="large" text="Loading page..." />
+                  </div>
+                }
               >
-              <div className="navbar-end">
-                <Link to="/products" className="navbar-item is-size-4">
-                  Products
-                </Link>
-                {this.state.user && this.state.user.accessLevel < 1 && (
-                  <Link to="/add-product" className="navbar-item is-size-4">
-                    Add Product
-                  </Link>
-                )}
-                {this.state.user && this.state.user.accessLevel >= 1 && (
-                  <Link to="/smart-bag" className="navbar-item is-size-4">
-                    Smart Bag
-                  </Link>
-                )}
-                {this.state.user && this.state.user.accessLevel >= 1 && (
-                  <Link to="/order-history" className="navbar-item is-size-4">
-                    Order History
-                  </Link>
-                )}
-                <Link to="/cart" className="navbar-item is-size-4">
-                  Cart
-                  <span
-                    className="tag is-primary has-background-info"
-                    style={{ marginLeft: "5px"}}
-                  >
-                    {Object.keys(this.state.cart).length}
-                  </span>
-                </Link>
-                {!this.state.user ? (
-                  <Link to="/login" className="navbar-item is-size-4">
-                    Login
-                  </Link>
-                ) : (
-                  <Link to="/" onClick={this.logout} className="navbar-item is-size-4">
-                    Logout
-                  </Link>
-                )}
-                {!this.state.user ? (
-                  <Link to="/signup" className="navbar-item is-size-4">
-                    Sign Up
-                  </Link>
-                ) : null}
-              </div>
-              </div>
-            </nav>
-            <Routes>
-              <Route path="/" element={<FrontPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/add-product" element={<AddProduct />} />
-              <Route path="/products" element={<FrontPage />} />
-              <Route path="/labels/:maj/*" element={<ProductLabel />} />
-              <Route path="/labels/:maj/:min/*" element={<ProductType />} />
-              <Route path="/labels/:maj/:min/:type" element={<ProductList />} />
-              <Route path="/deal/:maj" element={<ProductDeal />} />
-              <Route path="/smart-bag" element={<SmartBag />} />
-              <Route path="/smartbag/:maj" element={<ProductDeal />} />
-              <Route path="/order-history" element={<OrderHistory />} />
-              <Route path="/orderHis/:key" element={<OrderTable />} />
-              <Route path="/signup" element={<SignUp />} />
-            </Routes>
-            </div>
+                <Routes>
+                  <Route path="/" element={<FrontPage />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/add-product" element={<AddProduct />} />
+                  <Route path="/products" element={<FrontPage />} />
+                  <Route path="/labels/:maj/*" element={<ProductLabel />} />
+                  <Route path="/labels/:maj/:min/*" element={<ProductType />} />
+                  <Route path="/labels/:maj/:min/:type" element={<ProductList />} />
+                  <Route path="/deal/:maj" element={<ProductDeal />} />
+                  <Route path="/smart-bag" element={<SmartBag />} />
+                  <Route path="/smartbag/:maj" element={<SmartBagProducts />} />
+                  <Route path="/order-history" element={<OrderHistory />} />
+                  <Route path="/orderHis/:key" element={<OrderTable />} />
+                  <Route path="/signup" element={<SignUp />} />
+                </Routes>
+              </Suspense>
+            </main>
           </NavigationWrapper>
         </Router>
       </Context.Provider>

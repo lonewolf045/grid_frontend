@@ -1,30 +1,37 @@
-import React from "react";
+import Card from "./ui/Card";
+import OptimizedImage from "./ui/OptimizedImage";
+import "./OrderItem.css";
 
 const OrderItem = props => {
   const { orderItem } = props;
+  
   return (
-    <div className="card is-half is-centered" style={{backgroundColor:"rgb(255,235,103)",margin:"10px 10px 10px 10px",width:"650px",height:"160px"}}>
-      <div className="card-content">
-        <div className="media">
-          <div className="media-left">
-            <figure className="image is-64x64">
-              <img
-                src="https://bulma.io/images/placeholders/128x128.png"
-                alt={orderItem.shortDesc}
-              />
-            </figure>
+    <Card className="order-item-card" variant="default" padding="medium">
+      <div className="order-item-content">
+        <div className="order-item-image">
+          <OptimizedImage
+            src={orderItem.image || "https://bulma.io/images/placeholders/128x128.png"}
+            alt={orderItem.shortDesc || orderItem.name}
+            width={64}
+            height={64}
+            className="order-item-img"
+          />
+        </div>
+        
+        <div className="order-item-details">
+          <h3 className="order-item-name">{orderItem.name}</h3>
+          <div className="order-item-meta">
+            <span className="order-item-price">₹{orderItem.oprice}</span>
+            {orderItem.quantity && (
+              <span className="order-item-quantity">Qty: {orderItem.quantity}</span>
+            )}
           </div>
-          <div className="media-content">
-            <b style={{ textTransform: "capitalize"}}>
-            <span style={{fontFamily:'Comfortaa',fontSize:"20px"}}>{orderItem.name}</span><br/>
-            <span className="tag is-primary" style= {{color: 'white',textDecoration: 'none'}}>
-                <p><ins className = 'amount' style = {{color: 'white'}}>{orderItem.oprice}</ins></p>
-            </span>
-            </b>
-          </div>
+          {orderItem.shortDesc && (
+            <p className="order-item-description">{orderItem.shortDesc}</p>
+          )}
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

@@ -1,7 +1,8 @@
 .App {
   text-align: center;
-  background-color: white;
+  background-color: var(--bg-primary);
   min-height: 100vh;
+  color: var(--text-primary);
 }
 
 .App-logo {
@@ -16,18 +17,24 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--dark-gray);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: var(--text-2xl);
+  color: var(--text-inverse);
+  padding: var(--space-8);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--primary-blue);
+  transition: var(--transition-base);
+}
+
+.App-link:hover {
+  color: var(--primary-green);
 }
 
 @keyframes App-logo-spin {
@@ -37,4 +44,84 @@
   to {
     transform: rotate(360deg);
   }
+}
+/* App Loading States */
+.app-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.app-loading-content {
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.app-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  padding: var(--space-8);
+}
+
+.app-error-content {
+  text-align: center;
+  max-width: 500px;
+  padding: var(--space-8);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-lg);
+}
+
+.app-error-content h2 {
+  color: var(--error);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-heading);
+}
+
+.app-error-content p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+.app-error-content button {
+  background-color: var(--primary-green);
+  color: var(--text-inverse);
+  border: none;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.app-error-content button:hover {
+  background-color: #1e8e35;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+/* Import mobile optimizations */
+@import './styles/mobile-optimizations.css';
+
+/* Import accessibility enhancements */
+@import './styles/accessibility.css';
+
+/* Import animations and transitions */
+@import './styles/animations.css';
+
+/* Route Loading States */
+.route-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: var(--space-8);
 }

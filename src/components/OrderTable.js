@@ -1,37 +1,105 @@
-import React from "react";
 import OrderItem from "./OrderItem";
 import withContext from "../withContext";
 import { useParams } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Breadcrumb from "./ui/Breadcrumb";
+import "./OrderTable.css";
 
 const OrderTable = (props) => {
   const { orderList } = props;
   const { key } = useParams();
-  let orders = orderList[key].pro_det;
-console.log(orderList)
-  return (
-    <>
-      <div className="hero is-primary" style={{backgroundColor:"#26a541"}}>
-        <div className="hero-body container">
-          <h4 className="title" style={{fontFamily:'Patrick Hand SC',fontSize:'46px'}}>Products</h4>
+  
+  if (!orderList || !orderList[key]) {
+    return (
+      <Layout.Page
+        title="Order Details"
+        subtitle="Order not found"
+        breadcrumbs={
+          <Breadcrumb items={[
+            { label: 'Home', href: '/', icon: 'home' },
+            { label: 'Order History', href: '/orderHistory', icon: 'user' },
+            { label: 'Order Details', href: `/orderHis/${key}`, isActive: true }
+          ]} />
+        }
+      >
+        <div className="empty-state">
+          <div className="empty-state-content">
+            <div className="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M16 16l-4-4-4 4" />
+                <path d="M12 8v8" />
+              </svg>
+            </div>
+            <h3 className="empty-state-title">Order Not Found</h3>
+            <p className="empty-state-description">
+              The order you're looking for doesn't exist or has been removed.
+            </p>
+          </div>
         </div>
-      </div>
-      <br />
-      <div className="container">
-        <div className="columns is-multiline">
+      </Layout.Page>
+    );
+  }
+  
+  const orders = orderList[key].pro_det;
+  const orderInfo = orderList[key];
+  
+  return (
+    <Layout.Page
+      title={`Order #${key}`}
+      subtitle={`${orders?.length || 0} item${orders?.length !== 1 ? 's' : ''} in this order`}
+      breadcrumbs={
+        <Breadcrumb items={[
+          { label: 'Home', href: '/', icon: 'home' },
+          { label: 'Order History', href: '/orderHistory', icon: 'user' },
+          { label: `Order #${key}`, href: `/orderHis/${key}`, isActive: true }
+        ]} />
+      }
+    >
+      {/* Order Summary */}
+      {orderInfo && (
+        <div className="order-summary">
+          <div className="order-summary-header">
+            <h3>Order Summary</h3>
+            <div className="order-status">
+              <span className="status-badge status-badge--completed">Completed</span>
+            </div>
+          </div>
+          {orderInfo.total && (
+            <div className="order-total">
+              <span className="total-label">Total Amount:</span>
+              <span className="total-amount">₹{orderInfo.total}</span>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {/* Order Items */}
+      <div className="order-items-section">
+        <h3 className="section-title">Order Items</h3>
+        <div className="order-items-grid">
           {orders && orders.length ? (
-            orders.map((order) => (
-              <OrderItem orderItem={order}/>
+            orders.map((order, index) => (
+              <OrderItem key={index} orderItem={order} />
             ))
           ) : (
-            <div className="column">
-              <span className="title has-text-grey-light">
-                No products found!
-              </span>
+            <div className="empty-state">
+              <div className="empty-state-content">
+                <div className="empty-state-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l-1 7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 9z" />
+                  </svg>
+                </div>
+                <h3 className="empty-state-title">No products found</h3>
+                <p className="empty-state-description">
+                  This order appears to be empty or the products couldn't be loaded.
+                </p>
+              </div>
             </div>
           )}
         </div>
       </div>
-    </>
+    </Layout.Page>
   );
 };
 

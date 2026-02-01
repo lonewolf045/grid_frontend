@@ -1,0 +1,202 @@
+/* Mobile Touch Optimizations */
+
+/* Ensure minimum touch target sizes (44px recommended by Apple, 48px by Google) */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch-friendly button sizes */
+  .btn {
+    min-height: 48px;
+    min-width: 48px;
+    padding: var(--space-3) var(--space-4);
+  }
+  
+  .btn--small {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  /* Touch-friendly input fields */
+  .input {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Touch-friendly navigation items */
+  .nav-link {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+  }
+  
+  /* Touch-friendly card interactions */
+  .card--clickable,
+  .product-card,
+  .cart-item,
+  .order-history-card {
+    min-height: 48px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .btn:hover,
+  .card:hover,
+  .product-card:hover,
+  .cart-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Add active states for touch feedback */
+  .btn:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+  
+  .card--clickable:active,
+  .product-card:active {
+    transform: scale(0.99);
+    opacity: 0.9;
+  }
+  
+  /* Improve tap targets for small elements */
+  .remove-button,
+  .delete-button,
+  .close-button {
+    min-width: 48px;
+    min-height: 48px;
+    padding: var(--space-2);
+  }
+  
+  /* Touch-friendly form controls */
+  .form-group {
+    margin-bottom: var(--space-4);
+  }
+  
+  .form-actions {
+    margin-top: var(--space-6);
+  }
+  
+  /* Improve spacing for touch interactions */
+  .cart-item-actions {
+    gap: var(--space-3);
+  }
+  
+  .order-history-grid {
+    gap: var(--space-4);
+  }
+  
+  /* Touch-friendly navigation */
+  .navigation-mobile .nav-item {
+    min-height: 56px;
+    padding: var(--space-4);
+  }
+  
+  /* Improve touch targets for breadcrumbs */
+  .breadcrumb-link {
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3);
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Improve scrolling on mobile */
+@media (max-width: 768px) {
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Improve scroll performance */
+  .product-grid,
+  .cart-items-list,
+  .order-history-grid {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Add momentum scrolling for iOS */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+}
+
+/* Improve text selection on mobile */
+@media (max-width: 768px) {
+  /* Prevent text selection on interactive elements */
+  .btn,
+  .card--clickable,
+  .nav-link,
+  .breadcrumb-link {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow text selection for content */
+  .card-description,
+  .product-description,
+  .empty-state-description {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+}
+
+/* Improve focus indicators for keyboard navigation on mobile */
+@media (max-width: 768px) {
+  .btn:focus-visible,
+  .input:focus-visible,
+  .nav-link:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+}
+
+/* Optimize for different mobile orientations */
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape mode */
+  .page-header {
+    padding: var(--space-4) 0;
+    margin-bottom: var(--space-4);
+  }
+  
+  .auth-page {
+    padding: var(--space-4);
+  }
+  
+  .empty-state {
+    min-height: 300px;
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+/* Improve performance on mobile */
+@media (max-width: 768px) {
+  /* Use transform instead of changing layout properties */
+  .btn,
+  .card {
+    will-change: transform;
+  }
+  
+  /* Optimize animations for mobile */
+  .loading-spinner,
+  .skeleton {
+    will-change: opacity;
+  }
+  
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

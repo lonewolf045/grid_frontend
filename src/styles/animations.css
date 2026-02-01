@@ -1,0 +1,442 @@
+/* Animation & Transition Enhancements */
+/* UI/UX Improvements - Smooth animations and micro-interactions */
+
+/* ===== GLOBAL TRANSITION DEFAULTS ===== */
+
+/* Apply smooth transitions to all interactive elements */
+*,
+*::before,
+*::after {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* ===== BUTTON ANIMATIONS ===== */
+
+.btn {
+  transition: all var(--transition-base);
+  transform: translateY(0);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  transition-duration: 75ms;
+}
+
+/* Button loading animation */
+.btn--loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn__spinner-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== CARD ANIMATIONS ===== */
+
+.card {
+  transition: all var(--transition-base);
+}
+
+.card--hover:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-card {
+  transition: all var(--transition-base);
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.product-card-overlay {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--transition-base);
+}
+
+.product-card:hover .product-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== INPUT ANIMATIONS ===== */
+
+.input {
+  transition: all var(--transition-base);
+}
+
+.input:focus {
+  box-shadow: var(--shadow-sm);
+}
+
+.input-label {
+  transition: all var(--transition-base);
+}
+
+.input-container--focused .input-label {
+  color: var(--primary-green);
+  transform: scale(0.9);
+}
+
+/* ===== NAVIGATION ANIMATIONS ===== */
+
+.navbar-link {
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+/* Mobile menu animations */
+.navbar-menu--mobile {
+  transform: translateX(-100%);
+  transition: transform var(--transition-slow);
+}
+
+.navbar-menu--mobile-open {
+  transform: translateX(0);
+}
+
+.navbar-mobile-overlay {
+  opacity: 0;
+  animation: fadeIn var(--transition-base) forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+
+.loading-spinner__circle {
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: spin 1.5s ease-in-out infinite;
+}
+
+.dots-spinner__dot {
+  animation: dotPulse 1.4s ease-in-out infinite both;
+}
+
+.dots-spinner__dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dots-spinner__dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pulse-spinner__circle {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* ===== SKELETON LOADING ANIMATIONS ===== */
+
+.skeleton {
+  background: linear-gradient(90deg, 
+    var(--bg-secondary) 25%, 
+    var(--border-light) 50%, 
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ===== MODAL & OVERLAY ANIMATIONS ===== */
+
+.modal-overlay {
+  animation: fadeIn var(--transition-base) ease-out;
+}
+
+.modal-content {
+  animation: slideUp var(--transition-base) ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== CART ANIMATIONS ===== */
+
+.cart-item {
+  animation: slideInRight var(--transition-base) ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.cart-item-actions .btn {
+  transition: all var(--transition-fast);
+}
+
+.cart-item:hover .cart-item-actions .btn {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* ===== NOTIFICATION ANIMATIONS ===== */
+
+.notification {
+  animation: slideInDown var(--transition-base) ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== FORM ANIMATIONS ===== */
+
+.form-group {
+  animation: fadeInUp var(--transition-base) ease-out;
+}
+
+.form-group:nth-child(1) { animation-delay: 0ms; }
+.form-group:nth-child(2) { animation-delay: 50ms; }
+.form-group:nth-child(3) { animation-delay: 100ms; }
+.form-group:nth-child(4) { animation-delay: 150ms; }
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+.hover-lift {
+  transition: transform var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow var(--transition-base);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(38, 165, 65, 0.3);
+}
+
+/* ===== PAGE TRANSITION ANIMATIONS ===== */
+
+.page-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.page-exit-active {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+
+/* Badge animations */
+.badge {
+  animation: bounceIn var(--transition-base) ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Success/Error state animations */
+.success-state {
+  animation: successPulse var(--transition-base) ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
+
+.error-state {
+  animation: errorShake var(--transition-base) ease-out;
+}
+
+@keyframes errorShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+/* ===== ACCESSIBILITY ANIMATIONS ===== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Keep essential animations but make them instant */
+  .loading-spinner__circle,
+  .dots-spinner__dot,
+  .pulse-spinner__circle,
+  .skeleton {
+    animation: none;
+  }
+  
+  /* Show loading states without animation */
+  .loading-spinner__circle {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Use transform and opacity for better performance */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

@@ -1,0 +1,393 @@
+/* Skeleton Component Styles */
+
+.skeleton {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-base);
+  display: block;
+}
+
+/* ===== SKELETON VARIANTS ===== */
+
+.skeleton--rectangular {
+  border-radius: var(--radius-base);
+}
+
+.skeleton--circular {
+  border-radius: var(--radius-full);
+}
+
+.skeleton--rounded {
+  border-radius: var(--radius-lg);
+}
+
+.skeleton--text {
+  border-radius: var(--radius-sm);
+  height: 1em;
+}
+
+/* ===== SKELETON ANIMATIONS ===== */
+
+.skeleton--wave {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--light-gray) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.5s ease-in-out infinite;
+}
+
+.skeleton--pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton--none {
+  animation: none;
+}
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ===== TEXT SKELETON ===== */
+
+.text-skeleton-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-skeleton-group--tight {
+  gap: var(--space-1);
+}
+
+.text-skeleton-group--normal {
+  gap: var(--space-2);
+}
+
+.text-skeleton-group--relaxed {
+  gap: var(--space-3);
+}
+
+.text-skeleton-line {
+  height: 1em;
+}
+
+/* ===== AVATAR SKELETON ===== */
+
+.avatar-skeleton {
+  aspect-ratio: 1/1;
+}
+
+.avatar-skeleton--xs {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.avatar-skeleton--small {
+  width: 2rem;
+  height: 2rem;
+}
+
+.avatar-skeleton--medium {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.avatar-skeleton--large {
+  width: 3rem;
+  height: 3rem;
+}
+
+.avatar-skeleton--xl {
+  width: 4rem;
+  height: 4rem;
+}
+
+.avatar-skeleton--2xl {
+  width: 5rem;
+  height: 5rem;
+}
+
+/* ===== CARD SKELETON ===== */
+
+.card-skeleton {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.card-skeleton-image {
+  width: 100%;
+}
+
+.card-skeleton-content {
+  padding: var(--space-4);
+}
+
+.card-skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.card-skeleton-header-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.card-skeleton-body {
+  margin-bottom: var(--space-4);
+}
+
+.card-skeleton-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.card-skeleton-action {
+  border-radius: var(--radius-base);
+}
+
+/* ===== TABLE SKELETON ===== */
+
+.table-skeleton {
+  width: 100%;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table-skeleton-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.table-skeleton-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-skeleton-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.table-skeleton-row:last-child {
+  border-bottom: none;
+}
+
+/* ===== LIST SKELETON ===== */
+
+.list-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.list-skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-base);
+}
+
+.list-skeleton-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ===== PRODUCT GRID SKELETON ===== */
+
+.product-grid-skeleton {
+  width: 100%;
+}
+
+.product-grid-skeleton-item {
+  /* Inherits from card-skeleton */
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 768px) {
+  .table-skeleton-header,
+  .table-skeleton-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  
+  .card-skeleton-content {
+    padding: var(--space-3);
+  }
+  
+  .card-skeleton-actions {
+    flex-direction: column;
+  }
+  
+  .list-skeleton-item {
+    padding: var(--space-2);
+  }
+  
+  .product-grid-skeleton {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-4) !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-grid-skeleton {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-3) !important;
+  }
+  
+  .card-skeleton-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skeleton {
+    background-color: var(--border-medium);
+  }
+  
+  .skeleton--wave {
+    background: linear-gradient(
+      90deg,
+      var(--border-medium) 25%,
+      var(--border-dark) 50%,
+      var(--border-medium) 75%
+    );
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton--wave,
+  .skeleton--pulse {
+    animation: none;
+  }
+  
+  .skeleton {
+    background-color: var(--bg-secondary);
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background-color: var(--dark-gray);
+  }
+  
+  .skeleton--wave {
+    background: linear-gradient(
+      90deg,
+      var(--dark-gray) 25%,
+      var(--medium-gray) 50%,
+      var(--dark-gray) 75%
+    );
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.skeleton-group {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.skeleton-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Loading states for specific components */
+.skeleton-page {
+  padding: var(--space-8);
+}
+
+.skeleton-page-header {
+  margin-bottom: var(--space-8);
+}
+
+.skeleton-page-title {
+  width: 300px;
+  height: 2.5rem;
+  margin-bottom: var(--space-4);
+}
+
+.skeleton-page-subtitle {
+  width: 500px;
+  height: 1.5rem;
+}
+
+.skeleton-page-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-8);
+}
+
+.skeleton-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .skeleton-page-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .skeleton-page-title {
+    width: 250px;
+    height: 2rem;
+  }
+  
+  .skeleton-page-subtitle {
+    width: 300px;
+    height: 1.25rem;
+  }
+}

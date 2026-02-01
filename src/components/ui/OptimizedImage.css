@@ -1,0 +1,366 @@
+/* OptimizedImage Component Styles */
+
+.optimized-image-container {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.optimized-image {
+  width: 100%;
+  height: 100%;
+  transition: all var(--transition-base);
+}
+
+.optimized-image--loading {
+  opacity: 0;
+}
+
+.optimized-image--loaded {
+  opacity: 1;
+}
+
+.optimized-image--error {
+  opacity: 0;
+}
+
+.optimized-image--blur {
+  filter: blur(5px);
+  transform: scale(1.1);
+}
+
+/* ===== LOADING STATE ===== */
+
+.optimized-image-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* ===== ERROR STATE ===== */
+
+.optimized-image-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.optimized-image-error-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.optimized-image-error-text {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+/* ===== RESPONSIVE IMAGE ===== */
+
+.responsive-image {
+  /* Inherits from base optimized-image */
+}
+
+/* ===== AVATAR COMPONENT ===== */
+
+.avatar {
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-light);
+}
+
+.avatar--fallback {
+  background-color: var(--primary-green);
+  color: var(--white);
+}
+
+.avatar-fallback-text {
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+}
+
+/* Avatar sizes */
+.avatar--xs {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.avatar--xs .avatar-fallback-text {
+  font-size: var(--text-xs);
+}
+
+.avatar--small {
+  width: 2rem;
+  height: 2rem;
+}
+
+.avatar--small .avatar-fallback-text {
+  font-size: var(--text-sm);
+}
+
+.avatar--medium {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.avatar--medium .avatar-fallback-text {
+  font-size: var(--text-base);
+}
+
+.avatar--large {
+  width: 3rem;
+  height: 3rem;
+}
+
+.avatar--large .avatar-fallback-text {
+  font-size: var(--text-lg);
+}
+
+.avatar--xl {
+  width: 4rem;
+  height: 4rem;
+}
+
+.avatar--xl .avatar-fallback-text {
+  font-size: var(--text-xl);
+}
+
+.avatar--2xl {
+  width: 5rem;
+  height: 5rem;
+}
+
+.avatar--2xl .avatar-fallback-text {
+  font-size: var(--text-2xl);
+}
+
+/* ===== ASPECT RATIO VARIANTS ===== */
+
+.optimized-image-container--square {
+  aspect-ratio: 1/1;
+}
+
+.optimized-image-container--landscape {
+  aspect-ratio: 4/3;
+}
+
+.optimized-image-container--portrait {
+  aspect-ratio: 3/4;
+}
+
+.optimized-image-container--wide {
+  aspect-ratio: 16/9;
+}
+
+.optimized-image-container--ultrawide {
+  aspect-ratio: 21/9;
+}
+
+/* ===== OBJECT FIT VARIANTS ===== */
+
+.optimized-image--cover {
+  object-fit: cover;
+}
+
+.optimized-image--contain {
+  object-fit: contain;
+}
+
+.optimized-image--fill {
+  object-fit: fill;
+}
+
+.optimized-image--scale-down {
+  object-fit: scale-down;
+}
+
+.optimized-image--none {
+  object-fit: none;
+}
+
+/* ===== LOADING EFFECTS ===== */
+
+.optimized-image-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--light-gray) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Progressive blur effect */
+.optimized-image--progressive {
+  filter: blur(20px);
+  transition: filter 0.3s ease;
+}
+
+.optimized-image--progressive.optimized-image--loaded {
+  filter: blur(0);
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+.optimized-image-container--zoomable {
+  cursor: zoom-in;
+}
+
+.optimized-image-container--zoomable .optimized-image {
+  transition: transform var(--transition-base);
+}
+
+.optimized-image-container--zoomable:hover .optimized-image {
+  transform: scale(1.05);
+}
+
+.optimized-image-container--overlay {
+  position: relative;
+}
+
+.optimized-image-container--overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.optimized-image-container--overlay:hover::after {
+  opacity: 1;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 768px) {
+  .optimized-image-error {
+    padding: var(--space-2);
+  }
+  
+  .optimized-image-error-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .optimized-image-error-text {
+    font-size: var(--text-xs);
+  }
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .avatar {
+    border-width: 3px;
+  }
+  
+  .optimized-image-container {
+    border: 1px solid var(--border-dark);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .optimized-image,
+  .optimized-image-container--zoomable .optimized-image,
+  .optimized-image-container--overlay::after {
+    transition: none;
+  }
+  
+  .optimized-image--blur {
+    filter: none;
+    transform: none;
+  }
+  
+  .optimized-image--progressive {
+    filter: none;
+  }
+  
+  .optimized-image-container--zoomable:hover .optimized-image {
+    transform: none;
+  }
+  
+  .optimized-image-skeleton {
+    animation: none;
+    background: var(--bg-secondary);
+  }
+}
+
+/* Focus styles for interactive images */
+.optimized-image-container--interactive:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .optimized-image-container--zoomable {
+    cursor: default;
+  }
+  
+  .optimized-image-container--zoomable:hover .optimized-image {
+    transform: none;
+  }
+  
+  .optimized-image-container--overlay:hover::after {
+    opacity: 0;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+  .optimized-image-loading,
+  .optimized-image-error {
+    display: none;
+  }
+  
+  .optimized-image {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
