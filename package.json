@@ -1,7 +1,7 @@
 {
   "name": "e-commerce",
   "version": "0.1.0",
-  "homepage": "https://lonewolf045.github.io/grid-frontend",
+  "homepage": "https://lonewolf045.github.io/grid_frontend",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
