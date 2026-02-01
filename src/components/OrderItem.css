@@ -43,9 +43,15 @@
 
 .order-item-meta {
   display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  flex-direction: column;
+  gap: var(--space-2);
   margin-bottom: var(--space-2);
+}
+
+.price-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 .order-item-price {
@@ -57,10 +63,40 @@
   font-size: var(--text-sm);
 }
 
+.order-item-price.current {
+  background-color: var(--primary-green);
+}
+
+.order-item-price.original {
+  background-color: var(--text-muted);
+  text-decoration: line-through;
+  font-size: var(--text-xs);
+}
+
+.discount-badge {
+  background-color: var(--error);
+  color: var(--text-inverse);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-base);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+}
+
 .order-item-quantity {
   color: var(--text-secondary);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
+}
+
+.order-item-category {
+  margin-top: var(--space-2);
+}
+
+.category-path {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-transform: capitalize;
+  font-style: italic;
 }
 
 .order-item-description {

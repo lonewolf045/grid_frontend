@@ -6,8 +6,43 @@ import Breadcrumb from "./ui/Breadcrumb";
 import "./OrderTable.css";
 
 const OrderTable = (props) => {
-  const { orderList } = props;
+  const { user } = props.context;
   const { key } = useParams();
+  
+  // Get order data from user context
+  const orderList = user?.orderHis;
+  
+  if (!user) {
+    return (
+      <Layout.Page
+        title="Order Details"
+        subtitle="Please log in to view order details"
+        breadcrumbs={
+          <Breadcrumb items={[
+            { label: 'Home', href: '/', icon: 'home' },
+            { label: 'Order History', href: '/order-history', icon: 'user' },
+            { label: 'Order Details', href: `/orderHis/${key}`, isActive: true }
+          ]} />
+        }
+      >
+        <div className="empty-state">
+          <div className="empty-state-content">
+            <div className="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="8.5" cy="7" r="4" />
+                <path d="M20 8v6M23 11h-6" />
+              </svg>
+            </div>
+            <h3 className="empty-state-title">Please log in</h3>
+            <p className="empty-state-description">
+              You need to be logged in to view order details.
+            </p>
+          </div>
+        </div>
+      </Layout.Page>
+    );
+  }
   
   if (!orderList || !orderList[key]) {
     return (
@@ -17,7 +52,7 @@ const OrderTable = (props) => {
         breadcrumbs={
           <Breadcrumb items={[
             { label: 'Home', href: '/', icon: 'home' },
-            { label: 'Order History', href: '/orderHistory', icon: 'user' },
+            { label: 'Order History', href: '/order-history', icon: 'user' },
             { label: 'Order Details', href: `/orderHis/${key}`, isActive: true }
           ]} />
         }
@@ -44,6 +79,11 @@ const OrderTable = (props) => {
   const orders = orderList[key].pro_det;
   const orderInfo = orderList[key];
   
+  // Calculate order total from products
+  const orderTotal = orders?.reduce((total, item) => {
+    return total + (parseFloat(item.dprice) || 0);
+  }, 0) || 0;
+  
   return (
     <Layout.Page
       title={`Order #${key}`}
@@ -51,7 +91,7 @@ const OrderTable = (props) => {
       breadcrumbs={
         <Breadcrumb items={[
           { label: 'Home', href: '/', icon: 'home' },
-          { label: 'Order History', href: '/orderHistory', icon: 'user' },
+          { label: 'Order History', href: '/order-history', icon: 'user' },
           { label: `Order #${key}`, href: `/orderHis/${key}`, isActive: true }
         ]} />
       }
@@ -65,12 +105,20 @@ const OrderTable = (props) => {
               <span className="status-badge status-badge--completed">Completed</span>
             </div>
           </div>
-          {orderInfo.total && (
+          <div className="order-details">
+            <div className="order-detail-item">
+              <span className="detail-label">Order Date:</span>
+              <span className="detail-value">Day {orderInfo.day_of_month}</span>
+            </div>
+            <div className="order-detail-item">
+              <span className="detail-label">Items Count:</span>
+              <span className="detail-value">{orders?.length || 0} items</span>
+            </div>
             <div className="order-total">
               <span className="total-label">Total Amount:</span>
-              <span className="total-amount">₹{orderInfo.total}</span>
+              <span className="total-amount">₹{orderTotal.toFixed(2)}</span>
             </div>
-          )}
+          </div>
         </div>
       )}
       

@@ -11,7 +11,7 @@ const OrderHistory = props => {
   // Breadcrumb configuration
   const breadcrumbItems = [
     { label: 'Home', href: '/', icon: 'home' },
-    { label: 'Order History', href: '/orderHistory', icon: 'user', isActive: true }
+    { label: 'Order History', href: '/order-history', icon: 'user', isActive: true }
   ];
   
   if (!user || !user.orderHis) {

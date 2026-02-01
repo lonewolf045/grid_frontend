@@ -22,6 +22,32 @@
   font-family: var(--font-heading);
 }
 
+.order-details {
+  margin-top: var(--space-4);
+}
+
+.order-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.order-detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+}
+
+.detail-value {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
 .order-status {
   display: flex;
   align-items: center;
